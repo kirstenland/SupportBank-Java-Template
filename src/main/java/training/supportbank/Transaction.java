@@ -7,18 +7,18 @@ import java.util.Locale;
 
 public class Transaction {
     protected Date date;
-    protected String from;
-    protected String to;
+    protected Account from;
+    protected Account to;
     protected String narrative;
     protected Integer amount;
 
-    public Transaction(String[] transaction) throws ParseException {
+    public Transaction(String date, Account from, Account to, String narrative, String amount) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        date = formatter.parse(transaction[0]);
-        from = transaction[1];
-        to = transaction[2];
-        narrative = transaction[3];
-        amount = convertPoundsToPence(Double.parseDouble(transaction[4]));
+        this.date = formatter.parse(date);
+        this.from = from;
+        this.to = to;
+        this.narrative = narrative;
+        this.amount = convertPoundsToPence(Double.parseDouble(amount));
     }
 
     public int convertPoundsToPence(double pounds) {
@@ -27,5 +27,10 @@ public class Transaction {
 
     public double convertPenceToPounds(int pence) {
         return (double)pence/10;
+    }
+
+    public void process() {
+        to.updateBalance(amount);
+        from.updateBalance(-amount);
     }
 }
