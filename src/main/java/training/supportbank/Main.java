@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class Main {
 
     public static void main(String args[]) {
         Bank bank = new Bank();
-        List<String[]> transactions = readFile("Transactions2014.csv");
+        List<TransactionRecord> transactions = readFile("Transactions2015.csv");
         bank.addAll(transactions);
         bank.runAllTransactions();
         while (true) {
@@ -36,20 +37,39 @@ public class Main {
         }
     }
 
-    private static List<String[]> readFile(String fileName) {
-        List<String[]> transactions = new ArrayList<>();
+    private static List<TransactionRecord> readFile(String fileName) {
+        List<TransactionRecord> transactions = new ArrayList<>();
+        int errorCount = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                transactions.add(values);
+                try {
+                    transactions.add(TransactionRecord.fromCSVLine(line));
+                } catch (Exception e) {
+                    LOGGER.error("Oh no, an error has occurred on the following line");
+                    LOGGER.error(line);
+                    LOGGER.error(e.getMessage());
+                    errorCount += 1;
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            LOGGER.error("File Not Found Exception");
+            LOGGER.error(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error("File Not Found Exception");
+            LOGGER.error(e.getMessage());
         }
+
+        if (errorCount > 0) {
+            System.out.println(errorCount + " errors were found while importing data");
+            System.out.println("Please check the log for more details");
+        } else {
+            System.out.println("All transactions successfully loaded");
+        }
+
         return transactions;
     }
 

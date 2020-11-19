@@ -15,19 +15,14 @@ public class Bank {
         transactions = new ArrayList<>();
     }
 
-    public void addTransaction(String[] transaction) throws ParseException {
-        String date = transaction[0];
-
-        String fromName = transaction[1];
+    public void addTransaction(TransactionRecord transaction) {
+        String fromName = transaction.from;
         Account fromAccount = findOrAdd(fromName);
-
-        String toName = transaction[2];
+        String toName = transaction.to;
         Account toAccount = findOrAdd(toName);
 
-        String narrative = transaction[3];
-        String amount = transaction[4];
-
-        Transaction newTransaction = new Transaction(date, fromAccount, toAccount, narrative, amount);
+        Transaction newTransaction =
+                new Transaction(transaction.date, fromAccount, toAccount, transaction.narrative, transaction.amount);
         transactions.add(newTransaction);
     }
 
@@ -41,13 +36,9 @@ public class Bank {
         }
     }
 
-    public void addAll(List<String[]> transactions) {
-        for (int i = 0; i < transactions.size(); i++) {
-            try {
-                addTransaction(transactions.get(i));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+    public void addAll(List<TransactionRecord> transactions) {
+        for (TransactionRecord transaction : transactions) {
+            addTransaction(transaction);
         }
     }
 

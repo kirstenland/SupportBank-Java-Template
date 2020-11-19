@@ -13,13 +13,12 @@ public class Transaction {
     protected String narrative;
     protected Integer amount;
 
-    public Transaction(String date, Account from, Account to, String narrative, String amount) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        this.date = formatter.parse(date);
+    public Transaction(Date date, Account from, Account to, String narrative, Integer amount) {
+        this.date = date;
         this.from = from;
         this.to = to;
         this.narrative = narrative;
-        this.amount = Toolkit.convertPoundsToPence(Double.parseDouble(amount));
+        this.amount = amount;
     }
 
     public void process() {
