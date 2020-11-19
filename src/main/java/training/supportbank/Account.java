@@ -13,7 +13,19 @@ public class Account {
         return balance;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void updateBalance(int amount) {
         balance += amount;
+    }
+
+    public double convertPenceToPounds(int pence) {
+        return (double)pence/100;
+    }
+
+    public void display() {
+        System.out.println(name + " has £" + convertPenceToPounds(balance) + " in their account.");
     }
 }

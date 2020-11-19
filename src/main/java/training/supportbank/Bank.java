@@ -56,4 +56,19 @@ public class Bank {
             transaction.process();
         }
     }
+
+    public void listAll() {
+        for (Account user : users.values()) {
+            user.display();
+        }
+    }
+
+    public void listAccount(String name) {
+        Account account = users.get(name);
+        for (Transaction transaction: transactions) {
+            if (transaction.from.equals(account) || transaction.to.equals(account)) {
+                transaction.display();
+            }
+        }
+    }
 }

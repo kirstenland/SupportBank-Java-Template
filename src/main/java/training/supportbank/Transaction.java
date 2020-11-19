@@ -22,15 +22,15 @@ public class Transaction {
     }
 
     public int convertPoundsToPence(double pounds) {
-        return (int)pounds*10;
-    }
-
-    public double convertPenceToPounds(int pence) {
-        return (double)pence/10;
+        return (int)(pounds*100);
     }
 
     public void process() {
         to.updateBalance(amount);
         from.updateBalance(-amount);
+    }
+
+    public void display() {
+        System.out.println(date + from.getName() + to.getName() + narrative + amount);
     }
 }

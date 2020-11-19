@@ -9,11 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+
     public static void main(String args[]) {
         Bank bank = new Bank();
         List<String[]> transactions = readFile("Transactions2014.csv");
         bank.addAll(transactions);
         bank.runAllTransactions();
+        bank.listAll();
+        bank.listAccount("Chris W");
         System.out.println("Done!");
     }
 
@@ -33,6 +37,5 @@ public class Main {
         }
         return transactions;
     }
-
 
 }
