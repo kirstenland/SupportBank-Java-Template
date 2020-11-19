@@ -23,6 +23,7 @@ public class Bank {
 
         Transaction newTransaction =
                 new Transaction(transaction.date, fromAccount, toAccount, transaction.narrative, transaction.amount);
+        newTransaction.process();
         transactions.add(newTransaction);
     }
 
@@ -39,12 +40,6 @@ public class Bank {
     public void addAll(List<TransactionRecord> transactions) {
         for (TransactionRecord transaction : transactions) {
             addTransaction(transaction);
-        }
-    }
-
-    public void runAllTransactions() {
-        for (Transaction transaction : transactions) {
-            transaction.process();
         }
     }
 

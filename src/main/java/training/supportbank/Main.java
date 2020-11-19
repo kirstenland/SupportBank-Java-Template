@@ -9,12 +9,8 @@ public class Main {
 
     public static void main(String args[]) throws FileNotFoundException, ParseException {
         Bank bank = new Bank();
-        List<TransactionRecord> transactions = Toolkit.readFile("Transactions2013.json");
-        bank.addAll(transactions);
-        bank.runAllTransactions();
-
         while (true) {
-            System.out.println("What would you like to see?");
+            System.out.println("What would you like to do?");
             Scanner scan = new Scanner(System.in);
             String input = scan.nextLine();
             if (input.equals("List All")) {
@@ -23,8 +19,14 @@ public class Main {
             else if (input.startsWith("List ")){
                 bank.listAccount(input.substring(5));
             }
+            else if (input.startsWith("Import File ")) {
+                String fileName = input.substring(12);
+                List<TransactionRecord> transactions = Toolkit.readFile(fileName);
+                bank.addAll(transactions);
+            }
             else {
-                System.out.println("Type \"List All\" for all accounts or \"List USER\" for the transactions of an account.");
+                System.out.println(
+                        "Type \"List All\", \"List USER\" or \"Import File FILENAME\".");
             }
         }
     }
