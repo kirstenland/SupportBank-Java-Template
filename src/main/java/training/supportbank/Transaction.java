@@ -1,5 +1,6 @@
 package training.supportbank;
 
+import javax.tools.Tool;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,11 +19,7 @@ public class Transaction {
         this.from = from;
         this.to = to;
         this.narrative = narrative;
-        this.amount = convertPoundsToPence(Double.parseDouble(amount));
-    }
-
-    public int convertPoundsToPence(double pounds) {
-        return (int)(pounds*100);
+        this.amount = Toolkit.convertPoundsToPence(Double.parseDouble(amount));
     }
 
     public void process() {
@@ -31,6 +28,6 @@ public class Transaction {
     }
 
     public void display() {
-        System.out.println(date + from.getName() + to.getName() + narrative + amount);
+        Toolkit.displayFormatter(Toolkit.displayDate(date), from.getName(), to.getName(), narrative, Toolkit.displayPenceAsPounds(amount));
     }
 }

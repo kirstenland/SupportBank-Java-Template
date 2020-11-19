@@ -65,6 +65,7 @@ public class Bank {
 
     public void listAccount(String name) {
         Account account = users.get(name);
+        Toolkit.displayFormatter("Date", "From", "To", "Narrative", "Amount");
         for (Transaction transaction: transactions) {
             if (transaction.from.equals(account) || transaction.to.equals(account)) {
                 transaction.display();

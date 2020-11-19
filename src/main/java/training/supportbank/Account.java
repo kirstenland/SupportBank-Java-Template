@@ -21,11 +21,7 @@ public class Account {
         balance += amount;
     }
 
-    public double convertPenceToPounds(int pence) {
-        return (double)pence/100;
-    }
-
     public void display() {
-        System.out.println(name + " has £" + convertPenceToPounds(balance) + " in their account.");
+        System.out.println(name + " has £" + Toolkit.convertPenceToPounds(balance) + " in their account.");
     }
 }

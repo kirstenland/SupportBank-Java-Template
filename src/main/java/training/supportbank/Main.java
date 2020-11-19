@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -16,9 +16,20 @@ public class Main {
         List<String[]> transactions = readFile("Transactions2014.csv");
         bank.addAll(transactions);
         bank.runAllTransactions();
-        bank.listAll();
-        bank.listAccount("Chris W");
-        System.out.println("Done!");
+        while (true) {
+            System.out.println("What would you like to see?");
+            Scanner scan = new Scanner(System.in);
+            String input = scan.nextLine();
+            if (input.equals("List All")) {
+                bank.listAll();
+            }
+            else if (input.startsWith("List ")){
+                bank.listAccount(input.substring(5));
+            }
+            else {
+                System.out.println("Type \"List All\" for all accounts or \"List USER\" for the transactions of an account.");
+            }
+        }
     }
 
     private static List<String[]> readFile(String fileName) {
