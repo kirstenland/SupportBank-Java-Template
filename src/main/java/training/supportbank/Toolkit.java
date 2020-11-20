@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -45,50 +46,37 @@ public class Toolkit {
     }
 
     public static List<TransactionRecord> readFile(String fileName) throws FileNotFoundException, ParseException {
+        Reader reader;
         if (fileName.endsWith(".csv")) {
-            return readFileCSV(fileName);
+            reader = new CSVReader();
         } else if (fileName.endsWith(".json")) {
-            return readFileJSON(fileName);
+            reader = new JSONReader();
         } else {
             LOGGER.error("Oh no, file type unrecognised.");
             return Collections.emptyList();
         }
-    }
 
-    public static List<TransactionRecord> readFileJSON(String fileName) throws FileNotFoundException, ParseException {
-        List<TransactionRecord> transactions = new ArrayList<>();
-        Gson gson = new Gson();
-        TransactionDummy[] transactionDummies = gson.fromJson(new FileReader(fileName), TransactionDummy[].class);
-        for (TransactionDummy transaction: transactionDummies) {
-            transactions.add(TransactionRecord.fromJSONLine(transaction));
-        }
-        return transactions;
-
-    }
-    public static List<TransactionRecord> readFileCSV(String fileName) {
-        List<TransactionRecord> transactions = new ArrayList<>();
-        int errorCount = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            br.readLine();
-            String line;
-            while ((line = br.readLine()) != null) {
-                try {
-                    transactions.add(TransactionRecord.fromCSVLine(line));
-                } catch (Exception e) {
-                    LOGGER.error("Oh no, an error has occurred on the following line");
-                    LOGGER.error(line);
-                    LOGGER.error(e.getMessage());
-                    errorCount += 1;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            LOGGER.error("File Not Found Exception");
-            LOGGER.error(e.getMessage());
+        List<DataRecord> dataRecords;
+        try {
+            dataRecords = reader.getAllRecords(fileName);
         } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error("I/O Exception");
             LOGGER.error(e.getMessage());
+            return Collections.emptyList();
+        }
+
+        int errorCount = 0;
+        List<TransactionRecord> transactions = new ArrayList<>();
+        for (DataRecord record : dataRecords) {
+            try {
+                transactions.add(record.toTransactionRecord());
+            } catch (Exception e) {
+                LOGGER.error("Oh no, an error has occurred on the following item");
+                LOGGER.error(record.display());
+                LOGGER.error(e.getMessage());
+                errorCount += 1;
+            }
         }
 
         if (errorCount > 0) {

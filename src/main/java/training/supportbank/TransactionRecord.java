@@ -19,28 +19,4 @@ public class TransactionRecord {
         this.narrative = narrative;
         this.amount = Toolkit.convertPoundsToPence(amount);
     }
-
-    public static TransactionRecord fromCSVLine(String line) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        String[] transaction = line.split(",");
-        Date date = formatter.parse(transaction[0]);
-        String fromName = transaction[1];
-        String toName = transaction[2];
-        String narrative = transaction[3];
-        Double amount = Double.parseDouble(transaction[4]);
-
-        return new TransactionRecord(date, fromName, toName, narrative, amount);
-    }
-
-    public static TransactionRecord fromJSONLine(TransactionDummy transaction) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date date = formatter.parse(transaction.date);
-        String fromName = transaction.fromAccount;
-        String toName = transaction.toAccount;
-        String narrative = transaction.narrative;
-        Double amount = transaction.amount;
-
-        return new TransactionRecord(date, fromName, toName, narrative, amount);
-    }
-
 }
