@@ -9,24 +9,28 @@ public class Main {
 
     public static void main(String args[]) throws FileNotFoundException, ParseException {
         Bank bank = new Bank();
-        while (true) {
+        Boolean running = true;
+        while (running) {
             System.out.println("What would you like to do?");
             Scanner scan = new Scanner(System.in);
             String input = scan.nextLine();
-            if (input.equals("List All")) {
+            if (input.equalsIgnoreCase("LIST ALL")) {
                 bank.listAll();
             }
-            else if (input.startsWith("List ")){
+            else if (input.toUpperCase().startsWith("LIST ")){
                 bank.listAccount(input.substring(5));
             }
-            else if (input.startsWith("Import File ")) {
+            else if (input.toUpperCase().startsWith("IMPORT FILE ")) {
                 String fileName = input.substring(12);
                 List<TransactionRecord> transactions = Toolkit.readFile(fileName);
                 bank.addAll(transactions);
             }
+            else if (input.equalsIgnoreCase("EXIT")) {
+                running = false;
+            }
             else {
                 System.out.println(
-                        "Type \"List All\", \"List USER\" or \"Import File FILENAME\".");
+                        "Type \"List All\", \"List USER\" or \"Import File FILENAME\" or \"exit\".");
             }
         }
     }

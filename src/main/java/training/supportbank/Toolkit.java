@@ -37,7 +37,7 @@ public class Toolkit {
     }
 
     public static String displayPenceAsPounds(int pence) {
-        return "£" + convertPenceToPounds(pence);
+        return String.format("£%s", String.format("%.2f", convertPenceToPounds(pence)));
     }
 
     public static void displayFormatter(String date, String from, String to, String narrative, String amount) {
@@ -63,8 +63,8 @@ public class Toolkit {
             transactions.add(TransactionRecord.fromJSONLine(transaction));
         }
         return transactions;
-
     }
+
     public static List<TransactionRecord> readFileCSV(String fileName) {
         List<TransactionRecord> transactions = new ArrayList<>();
         int errorCount = 0;
