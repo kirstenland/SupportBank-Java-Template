@@ -15,10 +15,10 @@ public class JSONRecord implements DataRecord{
     protected Double amount;
 
     @Override
-    public TransactionRecord toTransactionRecord() throws ParseException {
+    public Transaction toTransaction(Bank bank) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date realDate = formatter.parse(date);
-        return new TransactionRecord(realDate, fromAccount, toAccount, narrative, amount);
+        return new Transaction(realDate, bank.findOrAdd(fromAccount), bank.findOrAdd(toAccount), narrative, amount);
     }
 
     @Override

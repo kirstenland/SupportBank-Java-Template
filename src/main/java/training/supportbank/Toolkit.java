@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Toolkit {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static double convertPenceToPounds(int pence) {
         return (double)pence/100;
@@ -45,47 +45,17 @@ public class Toolkit {
         System.out.printf("%-15s %-15s %-15s %-45s %15s %n", date, from, to, narrative, amount);
     }
 
-    public static List<TransactionRecord> readFile(String fileName) throws FileNotFoundException, ParseException {
+    public static Reader getReader(String fileName) {
         Reader reader;
         if (fileName.endsWith(".csv")) {
-            reader = new CSVReader();
+            return reader = new CSVReader();
         } else if (fileName.endsWith(".json")) {
-            reader = new JSONReader();
+            return reader = new JSONReader();
         } else {
             LOGGER.error("Oh no, file type unrecognised.");
-            return Collections.emptyList();
+            return null;
         }
-
-        List<DataRecord> dataRecords;
-        try {
-            dataRecords = reader.getAllRecords(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.error("I/O Exception");
-            LOGGER.error(e.getMessage());
-            return Collections.emptyList();
-        }
-
-        int errorCount = 0;
-        List<TransactionRecord> transactions = new ArrayList<>();
-        for (DataRecord record : dataRecords) {
-            try {
-                transactions.add(record.toTransactionRecord());
-            } catch (Exception e) {
-                LOGGER.error("Oh no, an error has occurred on the following item");
-                LOGGER.error(record.display());
-                LOGGER.error(e.getMessage());
-                errorCount += 1;
-            }
-        }
-
-        if (errorCount > 0) {
-            System.out.println(errorCount + " errors were found while importing data");
-            System.out.println("Please check the log for more details");
-        } else {
-            System.out.println("All transactions successfully loaded");
-        }
-
-        return transactions;
     }
 }
+
+

@@ -13,12 +13,12 @@ public class Transaction {
     protected String narrative;
     protected Integer amount;
 
-    public Transaction(Date date, Account from, Account to, String narrative, Integer amount) {
+    public Transaction(Date date, Account from, Account to, String narrative, double pounds) {
         this.date = date;
         this.from = from;
         this.to = to;
         this.narrative = narrative;
-        this.amount = amount;
+        this.amount = Toolkit.convertPoundsToPence(pounds);
     }
 
     public void process() {

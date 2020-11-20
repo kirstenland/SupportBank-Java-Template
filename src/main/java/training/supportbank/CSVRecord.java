@@ -14,16 +14,18 @@ public class CSVRecord implements DataRecord{
     }
 
     @Override
-    public TransactionRecord toTransactionRecord() throws ParseException {
+    public Transaction toTransaction(Bank bank) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         String[] transaction = line.split(",");
         Date date = formatter.parse(transaction[0]);
         String fromName = transaction[1];
+        Account fromAccount = bank.findOrAdd(fromName);
         String toName = transaction[2];
+        Account toAccount = bank.findOrAdd(toName);
         String narrative = transaction[3];
         Double amount = Double.parseDouble(transaction[4]);
 
-        return new TransactionRecord(date, fromName, toName, narrative, amount);
+        return new Transaction(date, fromAccount, toAccount, narrative, amount);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package training.supportbank;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Bank {
     Map<String, Account> users;
@@ -15,16 +14,9 @@ public class Bank {
         transactions = new ArrayList<>();
     }
 
-    public void addTransaction(TransactionRecord transaction) {
-        String fromName = transaction.from;
-        Account fromAccount = findOrAdd(fromName);
-        String toName = transaction.to;
-        Account toAccount = findOrAdd(toName);
-
-        Transaction newTransaction =
-                new Transaction(transaction.date, fromAccount, toAccount, transaction.narrative, transaction.amount);
-        newTransaction.process();
-        transactions.add(newTransaction);
+    public void addTransaction(Transaction transaction) {
+        transaction.process();
+        transactions.add(transaction);
     }
 
     public Account findOrAdd(String name) {
@@ -34,12 +26,6 @@ public class Bank {
             Account newAccount = new Account(name);
             users.put(name, newAccount);
             return newAccount;
-        }
-    }
-
-    public void addAll(List<TransactionRecord> transactions) {
-        for (TransactionRecord transaction : transactions) {
-            addTransaction(transaction);
         }
     }
 
@@ -56,6 +42,44 @@ public class Bank {
             if (transaction.from.equals(account) || transaction.to.equals(account)) {
                 transaction.display();
             }
+        }
+    }
+
+    public void readFile(String fileName) {
+        Reader reader = Toolkit.getReader(fileName);
+
+        if (reader == null) {
+            return;
+        }
+
+        List<DataRecord> dataRecords;
+        try {
+            dataRecords = reader.getAllRecords(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toolkit.LOGGER.error("I/O Exception");
+            Toolkit.LOGGER.error(e.getMessage());
+            return;
+        }
+
+        int errorCount = 0;
+        for (DataRecord record : dataRecords) {
+            try {
+                Transaction transaction = record.toTransaction(this);
+                addTransaction(transaction);
+            } catch (Exception e) {
+                Toolkit.LOGGER.error("Oh no, an error has occurred on the following item");
+                Toolkit.LOGGER.error(record.display());
+                Toolkit.LOGGER.error(e.getMessage());
+                errorCount += 1;
+            }
+        }
+
+        if (errorCount > 0) {
+            System.out.println(errorCount + " errors were found while importing data");
+            System.out.println("Please check the log for more details");
+        } else {
+            System.out.println("All transactions successfully loaded");
         }
     }
 }

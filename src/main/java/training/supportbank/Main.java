@@ -1,19 +1,17 @@
 package training.supportbank;
 
-import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String args[]) throws FileNotFoundException, ParseException {
+    public static void main(String args[]) {
         Bank bank = new Bank();
-        while (true) {
+        boolean quit = false;
+        while (!quit) {
             System.out.println("What would you like to do?");
             Scanner scan = new Scanner(System.in);
             String input = scan.nextLine();
-            if (input.equals("List All")) {
+            if (input.equalsIgnoreCase("List All")) {
                 bank.listAll();
             }
             else if (input.startsWith("List ")){
@@ -21,8 +19,10 @@ public class Main {
             }
             else if (input.startsWith("Import File ")) {
                 String fileName = input.substring(12);
-                List<TransactionRecord> transactions = Toolkit.readFile(fileName);
-                bank.addAll(transactions);
+                bank.readFile(fileName);
+            }
+            else if (input.equalsIgnoreCase("Quit")) {
+                quit = true;
             }
             else {
                 System.out.println(
