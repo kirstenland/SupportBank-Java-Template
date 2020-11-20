@@ -48,9 +48,11 @@ public class Toolkit {
     public static Reader getReader(String fileName) {
         Reader reader;
         if (fileName.endsWith(".csv")) {
-            return reader = new CSVReader();
+            return new CSVReader();
         } else if (fileName.endsWith(".json")) {
-            return reader = new JSONReader();
+            return new JSONReader();
+        } else if (fileName.endsWith(".xml")) {
+            return new XMLReader();
         } else {
             LOGGER.error("Oh no, file type unrecognised.");
             return null;

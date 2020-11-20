@@ -9,10 +9,6 @@ public class Account {
         balance = 0;
     }
 
-    public int getBalance() {
-        return balance;
-    }
-
     public String getName() {
         return name;
     }
