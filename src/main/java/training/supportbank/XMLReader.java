@@ -1,6 +1,7 @@
 package training.supportbank;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,17 +13,7 @@ public class XMLReader implements Reader{
 
     public XMLReader() {
         xstream = new XStream();
-        xstream.alias("TransactionList", XMLTransactionList.class);
-        xstream.addImplicitCollection(XMLTransactionList.class, "transactionList");
-        xstream.alias("SupportTransaction", XMLRecord.class);
-        xstream.aliasField("Description", XMLRecord.class, "narrative");
-        xstream.aliasField("Parties", XMLRecord.class, "parties");
-        xstream.aliasField("Value", XMLRecord.class, "cost");
-        xstream.alias("Parties", XMLParties.class);
-        xstream.aliasField("From", XMLParties.class, "fromName");
-        xstream.aliasField("To", XMLParties.class, "toName");
-        xstream.useAttributeFor(XMLRecord.class, "date");
-        xstream.aliasField("Date", XMLRecord.class, "date");
+        xstream.processAnnotations(new Class[] {XMLParties.class, XMLTransactionList.class, XMLRecord.class});
     }
 
     @Override

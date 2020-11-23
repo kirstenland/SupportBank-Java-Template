@@ -8,11 +8,19 @@ import java.util.Date;
 
 import org.apache.poi.ss.usermodel.DateUtil;
 
+@XStreamAlias("SupportTransaction")
 public class XMLRecord implements DataRecord {
 
+    @XStreamAlias("Description")
     private String narrative;
+
+    @XStreamAlias("Value")
     private double cost;
+
+    @XStreamAsAttribute
     private int date;
+
+    @XStreamAlias("Parties")
     private XMLParties parties;
 
     @Override
