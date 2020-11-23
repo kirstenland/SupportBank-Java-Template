@@ -19,14 +19,14 @@ public class XMLRecord implements DataRecord {
 
     @XStreamAsAttribute
     @XStreamAlias("Date")
-    private int date;
+    private String date;
 
     @XStreamAlias("Parties")
     private XMLParties parties;
 
     @Override
     public Transaction toTransaction(Bank bank) throws ParseException {
-        Date javaDate = DateUtil.getJavaDate((double) date);
+        Date javaDate = DateUtil.getJavaDate(Double.parseDouble(date));
         Account fromAccount = bank.findOrAdd(parties.getFromName());
         Account toAccount = bank.findOrAdd(parties.getToName());
         return new Transaction(javaDate, fromAccount, toAccount, narrative, cost);
@@ -34,6 +34,6 @@ public class XMLRecord implements DataRecord {
 
     @Override
     public String display() {
-        return "A string";
+        return XMLToolkit.xstream.toXML(this);
     }
 }
