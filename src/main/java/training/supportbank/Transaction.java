@@ -1,10 +1,6 @@
 package training.supportbank;
 
-import javax.tools.Tool;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class Transaction {
     protected Date date;

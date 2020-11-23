@@ -1,25 +1,11 @@
 package training.supportbank;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.stream.JsonReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.xml.crypto.Data;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 public class Toolkit {
     public static final Logger LOGGER = LogManager.getLogger();
@@ -38,7 +24,7 @@ public class Toolkit {
     }
 
     public static String displayPenceAsPounds(int pence) {
-        return "£" + convertPenceToPounds(pence);
+        return String.format("£%s", String.format("%.2f", convertPenceToPounds(pence)));
     }
 
     public static void displayFormatter(String date, String from, String to, String narrative, String amount) {
@@ -59,5 +45,4 @@ public class Toolkit {
         }
     }
 }
-
 
