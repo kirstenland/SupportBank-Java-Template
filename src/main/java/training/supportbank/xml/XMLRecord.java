@@ -1,4 +1,4 @@
-package training.supportbank;
+package training.supportbank.xml;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -7,6 +7,10 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.DateUtil;
+import training.supportbank.models.Account;
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Transaction;
+import training.supportbank.services.Bank;
 
 @XStreamAlias("SupportTransaction")
 public class XMLRecord implements DataRecord {

@@ -1,4 +1,6 @@
-package training.supportbank;
+package training.supportbank.models;
+
+import training.supportbank.Toolkit;
 
 public class Account {
     private String name;

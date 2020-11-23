@@ -1,4 +1,6 @@
-package training.supportbank;
+package training.supportbank.models;
+
+import training.supportbank.services.Bank;
 
 import java.text.ParseException;
 

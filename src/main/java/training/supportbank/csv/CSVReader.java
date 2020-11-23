@@ -1,4 +1,7 @@
-package training.supportbank;
+package training.supportbank.csv;
+
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Reader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

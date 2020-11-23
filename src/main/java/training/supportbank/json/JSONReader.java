@@ -1,6 +1,8 @@
-package training.supportbank;
+package training.supportbank.json;
 
 import com.google.gson.Gson;
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Reader;
 
 import java.io.FileReader;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package training.supportbank;
+package training.supportbank.xml;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import training.supportbank.models.DataRecord;
 
 import java.util.List;
 

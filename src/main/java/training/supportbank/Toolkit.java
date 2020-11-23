@@ -2,6 +2,10 @@ package training.supportbank;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import training.supportbank.json.JSONReader;
+import training.supportbank.csv.CSVReader;
+import training.supportbank.models.Reader;
+import training.supportbank.xml.XMLReader;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

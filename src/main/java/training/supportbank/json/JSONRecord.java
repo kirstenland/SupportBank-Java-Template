@@ -1,13 +1,16 @@
-package training.supportbank;
+package training.supportbank.json;
 
 import com.google.gson.Gson;
+import training.supportbank.services.Bank;
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class JSONRecord implements DataRecord{
+public class JSONRecord implements DataRecord {
     protected String date;
     protected String fromAccount;
     protected String toAccount;

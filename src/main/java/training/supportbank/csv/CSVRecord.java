@@ -1,11 +1,16 @@
-package training.supportbank;
+package training.supportbank.csv;
+
+import training.supportbank.models.Account;
+import training.supportbank.services.Bank;
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CSVRecord implements DataRecord{
+public class CSVRecord implements DataRecord {
 
     private String line;
 

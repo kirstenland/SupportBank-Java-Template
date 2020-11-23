@@ -1,5 +1,7 @@
 package training.supportbank;
 
+import training.supportbank.services.Bank;
+
 import java.util.Scanner;
 
 public class Main {

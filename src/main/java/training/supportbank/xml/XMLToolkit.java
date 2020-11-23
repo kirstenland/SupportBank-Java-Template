@@ -1,4 +1,4 @@
-package training.supportbank;
+package training.supportbank.xml;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.NoTypePermission;

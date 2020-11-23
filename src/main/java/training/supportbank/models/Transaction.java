@@ -1,4 +1,7 @@
-package training.supportbank;
+package training.supportbank.models;
+
+import training.supportbank.Toolkit;
+import training.supportbank.models.Account;
 
 import java.util.Date;
 
@@ -8,6 +11,14 @@ public class Transaction {
     protected Account to;
     protected String narrative;
     protected Integer amount;
+
+    public Account getFrom() {
+        return from;
+    }
+
+    public Account getTo() {
+        return to;
+    }
 
     public Transaction(Date date, Account from, Account to, String narrative, double pounds) {
         this.date = date;

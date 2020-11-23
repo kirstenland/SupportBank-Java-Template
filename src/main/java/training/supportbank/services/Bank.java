@@ -1,4 +1,10 @@
-package training.supportbank;
+package training.supportbank.services;
+
+import training.supportbank.Toolkit;
+import training.supportbank.models.Account;
+import training.supportbank.models.DataRecord;
+import training.supportbank.models.Reader;
+import training.supportbank.models.Transaction;
 
 import java.io.IOException;
 import java.util.*;
@@ -37,7 +43,7 @@ public class Bank {
         Account account = users.get(name);
         Toolkit.displayFormatter("Date", "From", "To", "Narrative", "Amount");
         for (Transaction transaction: transactions) {
-            if (transaction.from.equals(account) || transaction.to.equals(account)) {
+            if (transaction.getFrom().equals(account) || transaction.getTo().equals(account)) {
                 transaction.display();
             }
         }
