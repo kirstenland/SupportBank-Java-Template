@@ -18,6 +18,7 @@ public class XMLRecord implements DataRecord {
     private double cost;
 
     @XStreamAsAttribute
+    @XStreamAlias("Date")
     private int date;
 
     @XStreamAlias("Parties")
