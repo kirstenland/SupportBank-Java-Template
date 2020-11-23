@@ -1,7 +1,7 @@
 package training.supportbank;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +14,8 @@ public class XMLReader implements Reader{
     public XMLReader() {
         xstream = new XStream();
         xstream.processAnnotations(new Class[] {XMLParties.class, XMLTransactionList.class, XMLRecord.class});
+        xstream.addPermission(NoTypePermission.NONE);
+        xstream.allowTypes(new Class[]{XMLTransactionList.class, XMLRecord.class});
     }
 
     @Override
